@@ -1,0 +1,27 @@
+cd ..
+rm --recursive --force archlab-handout
+rm --recursive --force sim
+tar xf official.stuffs/archlab-handout.tar
+tar xf archlab-handout/sim.tar
+cd sim
+make clean
+sed -i "s/TKLIBS=-L\/usr\/lib -ltk -ltcl/TKLIBS=-I\/usr\/lib -ltk8.5 -ltcl8.5/g" Makefile
+cp ../PartC/seq-full.hcl seq/seq-full.hcl
+make VERSION=full
+./seq/ssim -t ./y86-code/asumi.yo
+
+cd y86-code
+make testssim
+cd ..
+
+cd ptest
+make SIM=../seq/ssim
+cd ..
+
+cd ptest
+make SIM=../seq/ssim TFLAGS=-i
+cd ..
+
+cd ../PartC
+../sim/misc/yas ./ncopy.ys
+../sim/misc/yis ./ncopy.yo

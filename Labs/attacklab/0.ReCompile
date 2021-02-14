@@ -1,0 +1,3 @@
+rm --recursive --force target1
+tar xf official.stuffs/target1.tar
+echo "done."

@@ -1,0 +1,5 @@
+# prepare
+cat input_01_hex.txt | ../../target1/hex2raw > input_02_raw.txt
+
+# do
+../../target1/rtarget -q -i ./input_02_raw.txt

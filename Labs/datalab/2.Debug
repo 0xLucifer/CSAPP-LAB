@@ -1,0 +1,16 @@
+gdb						\
+	--eval-command="tbreak bitXor"		\
+	--eval-command="tbreak tmin"		\
+	--eval-command="tbreak isTmax"		\
+	--eval-command="tbreak allOddBits"	\
+	--eval-command="tbreak negate"		\
+	--eval-command="tbreak isAsciiDigit"	\
+	--eval-command="tbreak conditional"	\
+	--eval-command="tbreak isLessOrEqual"	\
+	--eval-command="tbreak logicalNeg"	\
+	--eval-command="tbreak howManyBits"	\
+	--eval-command="tbreak floatScale2"	\
+	--eval-command="tbreak floatFloat2Int"	\
+	--eval-command="tbreak floatPower2"	\
+	--eval-command="run"			\
+	./datalab-handout/btest

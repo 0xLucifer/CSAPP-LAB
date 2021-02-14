@@ -1,0 +1,31 @@
+#(1/4) UnArchive
+clear
+echo "Stage(1/4) UnArchive"
+cd ..
+rm --recursive --force archlab-handout
+rm --recursive --force sim
+tar xf official.stuffs/archlab-handout.tar
+tar xf archlab-handout/sim.tar
+
+
+#(2/4) Prepare for Compile
+echo "Stage(2/4) Prepare for Compile"
+cd sim
+make clean        -silent
+sed -i "s/TKLIBS=-/#TKLIBS=-/g" ./Makefile
+sed -i "s/TKINC=-/#TKINC=-/g"   ./Makefile
+
+
+#(3/4) Compile (difference in here!!!)
+echo "Stage(3/4) Compile (difference in here!!!)"
+# make              -silent
+  cp ../PartB/seq-full.2.new.hcl seq/seq-full.hcl
+  make VERSION=full -silent
+
+
+#(4/4) Test
+echo "Stage(4/4) Test"
+./seq/ssim -t ./y86-code/asumi.yo               | egrep -i --color=auto "fail|succe"
+cd y86-code && make testssim                    | egrep -i --color=auto "fail|succe"
+cd ../ptest && make SIM=../seq/ssim             | egrep -i --color=auto "fail|succe"
+cd ../ptest && make SIM=../seq/ssim TFLAGS=-i   | egrep -i --color=auto "fail|succe"

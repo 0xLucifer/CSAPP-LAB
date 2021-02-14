@@ -1,0 +1,5 @@
+clear
+../sim/misc/yas ./source.3.copy.ys
+cat             ./source.3.copy.yo
+../sim/misc/yis ./source.3.copy.yo
+rm              ./source.3.copy.yo

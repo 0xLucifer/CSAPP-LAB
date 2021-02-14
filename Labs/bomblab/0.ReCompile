@@ -1,0 +1,2 @@
+rm --recursive --force bomb
+tar xf official.stuffs/bomb.tar

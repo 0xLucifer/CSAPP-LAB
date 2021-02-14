@@ -1,0 +1,5 @@
+clear
+../sim/misc/yas ./source.2.rsum.ys
+cat             ./source.2.rsum.yo
+../sim/misc/yis ./source.2.rsum.yo
+rm              ./source.2.rsum.yo

@@ -1,0 +1,19 @@
+cd Solver
+cd Step.1.ctarget.touch1
+./1.Run | grep "Valid solution"
+cd ..
+cd Step.2.ctarget.touch2
+./1.Run | grep "Valid solution"
+cd ..
+cd Step.3.ctarget.touch3
+./1.Run | grep "Valid solution"
+cd ..
+cd Step.4.rtarget.touch1
+./1.Run | grep "Valid solution"
+cd ..
+cd Step.5.rtarget.touch2
+./1.Run | grep "Valid solution"
+cd ..
+cd Step.6.rtarget.touch3
+./1.Run | grep "Valid solution"
+cd ..

@@ -1,0 +1,4 @@
+rm --recursive --force shlab-handout/
+tar xf official.stuffs/shlab-handout.tar
+cd shlab-handout
+make

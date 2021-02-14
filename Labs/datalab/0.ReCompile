@@ -1,0 +1,9 @@
+rm --recursive --force datalab-handout
+tar xf official.stuffs/datalab-handout.tar
+
+cd datalab-handout
+sed -i "s/CFLAGS = -O -Wall -m32/CFLAGS = -g3 -O0 -w -m32/g" ./Makefile
+sed -i "s/#define TIMEOUT_LIMIT 10/#define TIMEOUT_LIMIT 30/g" ./btest.c
+cp ../bits.c .
+make all -silent
+echo "done."

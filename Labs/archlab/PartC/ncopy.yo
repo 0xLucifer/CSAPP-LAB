@@ -1,0 +1,138 @@
+0x000: 6300                 | xorq %rax,%rax	 # count = 0
+0x002: c0f2f8ffffffffffffff | iaddq $-8,%rdx   # n - 8
+0x00c: 728401000000000000   | jl Test         # if n < 8 jump to Test
+0x015:                      | Loop:
+0x015: 50a70000000000000000 |   mrmovq (%rdi),%r10
+0x01f: 50970800000000000000 |   mrmovq 8(%rdi),%r9
+0x029: 62aa                 |   andq %r10,%r10
+0x02b: 40a60000000000000000 |   rmmovq %r10,(%rsi)
+0x035: 714800000000000000   |   jle Npos1
+0x03e: c0f00100000000000000 |   iaddq $1,%rax
+0x048:                      | Npos1:
+0x048: 6299                 |   andq %r9,%r9
+0x04a: 40960800000000000000 |   rmmovq %r9,8(%rsi)
+0x054: 716700000000000000   |   jle Npos2
+0x05d: c0f00100000000000000 |   iaddq $1,%rax
+0x067:                      | Npos2:
+                            | 
+0x067: 50a71000000000000000 |   mrmovq 16(%rdi),%r10
+0x071: 50971800000000000000 |   mrmovq 24(%rdi),%r9
+0x07b: 62aa                 |   andq %r10,%r10
+0x07d: 40a61000000000000000 |   rmmovq %r10,16(%rsi)
+0x087: 719a00000000000000   |   jle Npos3
+0x090: c0f00100000000000000 |   iaddq $1,%rax
+0x09a:                      | Npos3:
+0x09a: 6299                 |   andq %r9,%r9
+0x09c: 40961800000000000000 |   rmmovq %r9,24(%rsi)
+0x0a6: 71b900000000000000   |   jle Npos4
+0x0af: c0f00100000000000000 |   iaddq $1,%rax
+0x0b9:                      | Npos4:
+                            | 
+0x0b9: 50a72000000000000000 |   mrmovq 32(%rdi),%r10
+0x0c3: 50972800000000000000 |   mrmovq 40(%rdi),%r9
+0x0cd: 62aa                 |   andq %r10,%r10
+0x0cf: 40a62000000000000000 |   rmmovq %r10,32(%rsi)
+0x0d9: 71ec00000000000000   |   jle Npos5
+0x0e2: c0f00100000000000000 |   iaddq $1,%rax
+0x0ec:                      | Npos5:
+0x0ec: 6299                 |   andq %r9,%r9
+0x0ee: 40962800000000000000 |   rmmovq %r9,40(%rsi)
+0x0f8: 710b01000000000000   |   jle Npos6
+0x101: c0f00100000000000000 |   iaddq $1,%rax
+0x10b:                      | Npos6:
+                            | 
+0x10b: 50a73000000000000000 |   mrmovq 48(%rdi),%r10
+0x115: 50973800000000000000 |   mrmovq 56(%rdi),%r9
+0x11f: 62aa                 |   andq %r10,%r10
+0x121: 40a63000000000000000 |   rmmovq %r10,48(%rsi)
+0x12b: 713e01000000000000   |   jle Npos7
+0x134: c0f00100000000000000 |   iaddq $1,%rax
+0x13e:                      | Npos7:
+0x13e: 6299                 |   andq %r9,%r9
+0x140: 40963800000000000000 |   rmmovq %r9,56(%rsi)
+0x14a: 715d01000000000000   |   jle Npos8
+0x153: c0f00100000000000000 |   iaddq $1,%rax
+0x15d:                      | Npos8:
+                            | 
+0x15d: c0f74000000000000000 |   iaddq $64, %rdi  # add the *src, *dst
+0x167: c0f64000000000000000 |   iaddq $64, %rsi
+0x171: c0f2f8ffffffffffffff |   iaddq $-8, %rdx  # sub i
+0x17b: 751500000000000000   |   jge Loop         # loop
+                            | 
+0x184:                      | Test:              # n + 8 to deal with remaining numbers
+0x184: c0f20800000000000000 |   iaddq $8,%rdx
+0x18e: 749801000000000000   |   jne Rem1
+0x197: 90                   |   ret
+0x198:                      | Rem1:
+0x198: 50a70000000000000000 |   mrmovq (%rdi), %r10
+0x1a2: 50970800000000000000 |   mrmovq 8(%rdi), %r9
+0x1ac: 62aa                 |   andq %r10, %r10
+0x1ae: 71c101000000000000   |   jle Pos1
+0x1b7: c0f00100000000000000 |   iaddq $1, %rax
+0x1c1:                      | Pos1:
+0x1c1: 40a60000000000000000 |   rmmovq %r10, (%rsi)
+0x1cb: c0f2ffffffffffffffff |   iaddq $-1, %rdx
+0x1d5: 74df01000000000000   |   jne Rem2
+0x1de: 90                   |   ret
+                            | 
+0x1df:                      | Rem2:
+0x1df: 6299                 |   andq %r9, %r9
+0x1e1: 71f401000000000000   |   jle Pos2
+0x1ea: c0f00100000000000000 |   iaddq $1, %rax
+0x1f4:                      | Pos2:
+0x1f4: 40960800000000000000 |   rmmovq %r9, 8(%rsi)
+0x1fe: c0f2ffffffffffffffff |   iaddq $-1, %rdx
+0x208: 741202000000000000   |   jne Rem3
+0x211: 90                   |   ret
+                            | 
+0x212:                      | Rem3:
+0x212: 50a71000000000000000 |   mrmovq 16(%rdi), %r10
+0x21c: 50971800000000000000 |   mrmovq 24(%rdi), %r9
+0x226: 62aa                 |   andq %r10, %r10
+0x228: 713b02000000000000   |   jle Pos3
+0x231: c0f00100000000000000 |   iaddq $1, %rax
+0x23b:                      | Pos3:
+0x23b: 40a61000000000000000 |   rmmovq %r10, 16(%rsi)
+0x245: c0f2ffffffffffffffff |   iaddq $-1, %rdx
+0x24f: 745902000000000000   |   jne Rem4
+0x258: 90                   |   ret
+                            | 
+0x259:                      | Rem4:
+0x259: 6299                 |   andq %r9, %r9
+0x25b: 716e02000000000000   |   jle Pos4
+0x264: c0f00100000000000000 |   iaddq $1, %rax
+0x26e:                      | Pos4:
+0x26e: 40961800000000000000 |   rmmovq %r9, 24(%rsi)
+0x278: c0f2ffffffffffffffff |   iaddq $-1, %rdx
+0x282: 748c02000000000000   |   jne Rem5
+0x28b: 90                   |   ret
+                            | 
+0x28c:                      | Rem5:
+0x28c: 50a72000000000000000 |   mrmovq 32(%rdi), %r10
+0x296: 50972800000000000000 |   mrmovq 40(%rdi), %r9
+0x2a0: 50873000000000000000 |   mrmovq 48(%rdi), %r8
+0x2aa: 62aa                 |   andq %r10, %r10
+0x2ac: 71bf02000000000000   |   jle Pos5
+0x2b5: c0f00100000000000000 |   iaddq $1, %rax
+0x2bf:                      | Pos5:
+0x2bf: 40a62000000000000000 |   rmmovq %r10, 32(%rsi)
+0x2c9: c0f2ffffffffffffffff |   iaddq $-1, %rdx
+0x2d3: 74dd02000000000000   |   jne Rem6
+0x2dc: 90                   |   ret
+                            | 
+0x2dd:                      | Rem6:
+0x2dd: 6299                 |   andq %r9, %r9
+0x2df: 71f202000000000000   |   jle Pos6
+0x2e8: c0f00100000000000000 |   iaddq $1, %rax
+0x2f2:                      | Pos6:
+0x2f2: 40962800000000000000 |   rmmovq %r9, 40(%rsi)
+0x2fc: c0f2ffffffffffffffff |   iaddq $-1, %rdx
+0x306: 741003000000000000   |   jne Rem7
+0x30f: 90                   |   ret
+                            | 
+0x310:                      | Rem7:
+0x310: 6288                 |   andq %r8, %r8
+0x312: 712503000000000000   |   jle Pos7
+0x31b: c0f00100000000000000 |   iaddq $1, %rax
+0x325:                      | Pos7:
+0x325: 40863000000000000000 |   rmmovq %r8, 48(%rsi)

@@ -1,0 +1,9 @@
+# prepare
+cat input_01_hex.txt | ../../target1/hex2raw > input_02_raw.txt
+
+# do
+gdb	../../target1/rtarget					\
+	--silent						\
+	--init-eval-command="set args -q -i input_02_raw.txt"	\
+	--eval-command="break getbuf"				\
+	--eval-command="run"

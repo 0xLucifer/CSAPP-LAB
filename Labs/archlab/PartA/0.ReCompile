@@ -1,0 +1,12 @@
+cd ..
+rm --recursive --force archlab-handout
+rm --recursive --force sim
+tar xf official.stuffs/archlab-handout.tar
+tar xf archlab-handout/sim.tar
+
+
+cd sim
+make clean
+sed -i "s/TKLIBS=-/#TKLIBS=-/g" ./Makefile
+sed -i "s/TKINC=-/#TKINC=-/g"   ./Makefile
+make

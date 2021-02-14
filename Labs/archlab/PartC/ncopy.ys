@@ -1,0 +1,138 @@
+xorq %rax,%rax	 # count = 0
+iaddq $-8,%rdx   # n - 8
+jl Test         # if n < 8 jump to Test
+Loop:
+  mrmovq (%rdi),%r10
+  mrmovq 8(%rdi),%r9
+  andq %r10,%r10
+  rmmovq %r10,(%rsi)
+  jle Npos1
+  iaddq $1,%rax
+Npos1:
+  andq %r9,%r9
+  rmmovq %r9,8(%rsi)
+  jle Npos2
+  iaddq $1,%rax
+Npos2:
+
+  mrmovq 16(%rdi),%r10
+  mrmovq 24(%rdi),%r9
+  andq %r10,%r10
+  rmmovq %r10,16(%rsi)
+  jle Npos3
+  iaddq $1,%rax
+Npos3:
+  andq %r9,%r9
+  rmmovq %r9,24(%rsi)
+  jle Npos4
+  iaddq $1,%rax
+Npos4:
+
+  mrmovq 32(%rdi),%r10
+  mrmovq 40(%rdi),%r9
+  andq %r10,%r10
+  rmmovq %r10,32(%rsi)
+  jle Npos5
+  iaddq $1,%rax
+Npos5:
+  andq %r9,%r9
+  rmmovq %r9,40(%rsi)
+  jle Npos6
+  iaddq $1,%rax
+Npos6:
+
+  mrmovq 48(%rdi),%r10
+  mrmovq 56(%rdi),%r9
+  andq %r10,%r10
+  rmmovq %r10,48(%rsi)
+  jle Npos7
+  iaddq $1,%rax
+Npos7:
+  andq %r9,%r9
+  rmmovq %r9,56(%rsi)
+  jle Npos8
+  iaddq $1,%rax
+Npos8:
+
+  iaddq $64, %rdi  # add the *src, *dst
+  iaddq $64, %rsi
+  iaddq $-8, %rdx  # sub i
+  jge Loop         # loop
+
+Test:              # n + 8 to deal with remaining numbers
+  iaddq $8,%rdx
+  jne Rem1
+  ret
+Rem1:
+  mrmovq (%rdi), %r10
+  mrmovq 8(%rdi), %r9
+  andq %r10, %r10
+  jle Pos1
+  iaddq $1, %rax
+Pos1:
+  rmmovq %r10, (%rsi)
+  iaddq $-1, %rdx
+  jne Rem2
+  ret
+
+Rem2:
+  andq %r9, %r9
+  jle Pos2
+  iaddq $1, %rax
+Pos2:
+  rmmovq %r9, 8(%rsi)
+  iaddq $-1, %rdx
+  jne Rem3
+  ret
+
+Rem3:
+  mrmovq 16(%rdi), %r10
+  mrmovq 24(%rdi), %r9
+  andq %r10, %r10
+  jle Pos3
+  iaddq $1, %rax
+Pos3:
+  rmmovq %r10, 16(%rsi)
+  iaddq $-1, %rdx
+  jne Rem4
+  ret
+
+Rem4:
+  andq %r9, %r9
+  jle Pos4
+  iaddq $1, %rax
+Pos4:
+  rmmovq %r9, 24(%rsi)
+  iaddq $-1, %rdx
+  jne Rem5
+  ret
+
+Rem5:
+  mrmovq 32(%rdi), %r10
+  mrmovq 40(%rdi), %r9
+  mrmovq 48(%rdi), %r8
+  andq %r10, %r10
+  jle Pos5
+  iaddq $1, %rax
+Pos5:
+  rmmovq %r10, 32(%rsi)
+  iaddq $-1, %rdx
+  jne Rem6
+  ret
+
+Rem6:
+  andq %r9, %r9
+  jle Pos6
+  iaddq $1, %rax
+Pos6:
+  rmmovq %r9, 40(%rsi)
+  iaddq $-1, %rdx
+  jne Rem7
+  ret
+
+Rem7:
+  andq %r8, %r8
+  jle Pos7
+  iaddq $1, %rax
+Pos7:
+  rmmovq %r8, 48(%rsi)
