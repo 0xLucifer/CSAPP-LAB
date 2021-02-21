@@ -1,0 +1,11 @@
+cd malloclab-handout
+rm --recursive --force *.o
+rm --recursive --force mdriver
+cp ../mm-1.c mm.c
+make -silent
+cd ..
+gdb								\
+	--eval-command="set args -a -g -V -l -t ./traces"	\
+	--eval-command="tbreak main"				\
+	--eval-command="run"					\
+	./malloclab-handout/mdriver

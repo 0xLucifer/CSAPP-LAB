@@ -1,0 +1,25 @@
+---
+Language: Cpp
+BasedOnStyle: LLVM
+UseTab: Never
+IndentWidth: 4
+MaxEmptyLinesToKeep: 1
+ColumnLimit: 5000
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+AlignConsecutiveMacros: true
+AlignTrailingComments: true
+BreakBeforeTernaryOperators: true
+BreakStringLiterals: false
+AlignOperands: true
+AlwaysBreakBeforeMultilineStrings: false
+PointerAlignment: Left
+BreakBeforeBinaryOperators: None
+BinPackArguments: false
+BinPackParameters: false
+BreakBeforeBraces: Allman
+AllowAllParametersOfDeclarationOnNextLine: false
+SpaceAfterCStyleCast: true
+...
+
