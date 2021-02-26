@@ -1,0 +1,6 @@
+gdb								\
+	--eval-command="set args  -a -g -v -t ./traces"		\
+	--eval-command="tbreak main"				\
+	--eval-command="set architecture i386"			\
+	--eval-command="run"					\
+	./malloclab-handout/mdriver

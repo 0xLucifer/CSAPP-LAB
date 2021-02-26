@@ -1,0 +1,15 @@
+# Prepare for Compile
+rm --recursive --force malloclab-handout
+tar xf official.stuffs/malloclab-handout.tar
+cd malloclab-handout
+sed -i 's/CFLAGS = -Wall -O2 -m32/CFLAGS = -w -g3 -O0 -m32/g' Makefile
+cp ../.clang-format .clang-format
+
+# Compile and Run mm.2.Segregated.Fits.c
+cp ../mm.2.Segregated.Fits.c mm.c
+rm --recursive --force *.o
+rm --recursive --force mdriver
+make -silent
+echo "[!] Testing mm.2.Segregated.Fits.c ..."
+cd ..
+./malloclab-handout/mdriver -a -g -v -t ./traces
